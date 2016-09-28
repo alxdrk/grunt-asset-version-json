@@ -25,7 +25,8 @@ module.exports = function(grunt) {
           algorithm: 'md5',
           format: true,
           length: 4,
-          rename: false
+          rename: false,
+          copy: false
         });
 
     this.files.forEach(function(files) {
@@ -53,12 +54,14 @@ module.exports = function(grunt) {
 
         // Copy/rename file base on hash and format
         var resultPath = path.resolve(path.dirname(file), newName);
+
         if (options.rename) {
           fs.renameSync(file, resultPath);
-        } else {
+        } else if (!options.rename && options.copy) {
           grunt.file.copy(file, resultPath);
         }
-        grunt.log.writeln('  ' + file.grey + (' changed to ') + newName.green);
+
+        options.copy && grunt.log.writeln('  ' + file.grey + (' changed to ') + newName.green);
 
         // Write new hashes to revs/hashes tracking JSON file
         jsoncontent = grunt.file.readJSON(dest);
