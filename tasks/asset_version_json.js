@@ -18,7 +18,7 @@ var fs = require('fs')
 module.exports = function(grunt) {
 
   grunt.registerMultiTask('asset_version_json', 'Rename assets files with hash and store hashes in a JSON file', function() {
-    console.log(this.data);
+
     var dest = this.data.dest
       , options = this.options({
           encoding: 'utf8',
